@@ -1,4 +1,8 @@
-### Steps
+# REST API with GO/Gin
+
+## General instructions to create program in go
+
+### Choose a module path and create a go.mod file
 
 mkdir `<directory-path>`
 
@@ -16,11 +20,11 @@ touch makefile (it allows us to create scripts for our app)
 - inside the file type: `dev: go run main.go`
 - to run this command in the terminal, type in `make dev`
 
-## Install dependencies
+### Install dependencies
 
 go get `<module-name>` - to download one specific package
 
-import in the file `<module-name>` - to import package to the file
+import `<module-name>` to the file - to import package to the file
 
 go build || go test - to download all required module's dependencies
 
