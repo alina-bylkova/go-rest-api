@@ -1,8 +1,8 @@
 ### Steps
 
-mkdir <directory-path>
-cd <directory-path>
-go mod init <directory-path>
+mkdir `<directory-path>`
+cd `<directory-path>`
+go mod init `<directory-path>`
 
 - go.mod is like package.json in node.js (it contains an inventory of all your dependencies)
 - go.sum is like package-lock.json in node.js
