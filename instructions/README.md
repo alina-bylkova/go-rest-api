@@ -2,29 +2,31 @@
 
 ### Choose a module path and create a go.mod file
 
+go.mod is like package.json in node.js (it contains an inventory of all your dependencies)
+
+go.sum is like package-lock.json in node.js
+
 Run the following commands in the terminal:
 
 ```console
-$ mkdir `<directory-path>`
+$ mkdir <directory-path>
 
-$ cd `<directory-path>`
+$ cd <directory-path>
 
-$ go mod init `<directory-path>`
-
-- go.mod is like package.json in node.js (it contains an inventory of all your dependencies)
-- go.sum is like package-lock.json in node.js
+$ go mod init <directory-path>
 
 $ touch main.go
 ```
 
 ### Create makefile
 
+makefile allows us to create scripts for our app
+
 ```console
 $ touch makefile 
 ```
 
-- it allows us to create scripts for our app
-- inside the file type: `dev: go run main.go`
+Inside the file type: `dev: go run main.go`
 
 To run this script in the terminal, type in: 
 
@@ -64,9 +66,10 @@ To test specific file, run:
 
 ```console
 $ go test <test-file-path>
-
-example: go test ./db/slice_db
 ```
+
+**Example:** `go test ./db/slice_db`
+
 To test everything, run:
 
 ```console
