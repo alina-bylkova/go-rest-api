@@ -7,7 +7,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func NumbersGet(db *slice_db.Db) gin.HandlerFunc {
+// Example without interface
+// func NumbersGet(db *slice_db.Db) gin.HandlerFunc {
+// 	return func(c *gin.Context) {
+// 		result := db.GetAll()
+// 		c.JSON(http.StatusOK, result)
+// 	}
+// }
+
+// Using interface
+func NumbersGet(db slice_db.Getter) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		result := db.GetAll()
 		c.JSON(http.StatusOK, result)

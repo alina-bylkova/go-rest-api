@@ -5,9 +5,10 @@ This repo is a simple CRUD API for learning purpose
 In this API I have learned features and patterns in Go:
 
 - Using Gin to create a simple API
+- Using in-memory database to store an array of numbers 
 - Testing HTTP handlers
 - Using Docker to containerize the app
-- Using Redis for key-value storage
+- Implementing Redis for key-value storage
 
 ## How can I use it?
 
@@ -44,7 +45,7 @@ GET /numbers
 Fetch a specific number
 
 ```
-GET /numbers/{int}
+GET /numbers/:int
 ```
 
 Add a number
@@ -56,5 +57,5 @@ POST /numbers
 Remove a number
 
 ```
-DELETE /numbers/{int}
+DELETE /numbers/:int
 ```
