@@ -15,34 +15,68 @@ $ go mod init `<directory-path>`
 - go.sum is like package-lock.json in node.js
 
 $ touch main.go
+```
 
+### Create makefile
+
+```console
 $ touch makefile 
+```
 
 - it allows us to create scripts for our app
 - inside the file type: `dev: go run main.go`
-- to run this command in the terminal, type in `make dev`
+
+To run this script in the terminal, type in: 
+
+```console
+$ make dev
 ```
 
 ### Install dependencies
 
-Run the following commands in the terminal:
+To download one specific package, run in the terminal:
 
-go get `<module-name>` - to download one specific package
+```console
+$ go get <module-name>
+```
 
-- import `<module-name>` to the file - to import package to the file
+To import the package to the file, type in the following to your project file:
 
-go build || go test - to download all required module's dependencies
+```console
+import <module-name>
+```
 
-go list -m all - to list all installed packages
+To download all required module's dependencies, run in the terminal:
+
+```console
+$ go build || go test
+```
+
+To list all installed packages, run:
+
+```console
+$ go list -m all
+```
 
 ### Testing
 
-Run the following commands in the terminal:
+To test specific file, run:
 
-go test `<test-file-path`
+```console
+$ go test <test-file-path>
 
 example: go test ./db/slice_db
+```
+To test everything, run:
 
-go test ./... - to test everything
+```console
+$ go test ./...
+```
 
-go test -cover ./... - it will provide coverage for the testing (e.g. the output coverage: 100% means that we are covering 100% statements without testing)
+To test everything with coverage info, run:
+
+```console
+$ go test -cover ./...
+```
+
+It will provide coverage for the testing (e.g. the output `coverage: 100%` means that we are covering 100% statements without testing)
