@@ -1,33 +1,36 @@
 package slice_db
 
 type Db struct {
-	numbers []int
+	Numbers []int
 }
 
 func New() *Db {
+	// return &Db{
+	// 	Numbers: []int{5, 10},
+	// }
 	return &Db{}
 }
 
 // Create new item
-func (db *Db) Add(num int) string {
-	for _, item := range db.numbers {
+func (db *Db) Add(num int) interface{} {
+	for _, item := range db.Numbers {
 		if item == num {
 			return "Number already exist in the database"
 		}
 	}
-	db.numbers = append(db.numbers, num)
-	return "Number successfully added to the database"
+	db.Numbers = append(db.Numbers, num)
+	return db.Numbers
 }
 
 // Get all items
 func (db *Db) GetAll() []int {
-	return db.numbers
+	return db.Numbers
 }
 
 // Get specific item
 func (db *Db) GetOne(num int) interface{} {
 	// If not found return not found
-	for _, item := range db.numbers {
+	for _, item := range db.Numbers {
 		if item == num {
 			return item
 		}
@@ -36,15 +39,12 @@ func (db *Db) GetOne(num int) interface{} {
 }
 
 // Delete specific item
-func (db *Db) DeleteOne(num int) interface{} {
-	newArr := make([]int, len(db.numbers))
-	copy(newArr, db.numbers)
-
-	for i := 0; i < len(newArr); i++ {
-		if newArr[i] == num {
-			newArr = append(newArr[:i], newArr[i+1:]...)
+func (db *Db) Delete(num int) interface{} {
+	for i := 0; i < len(db.Numbers); i++ {
+		if db.Numbers[i] == num {
+			db.Numbers = append(db.Numbers[:i], db.Numbers[i+1:]...)
 			i--
-			return newArr
+			return db.Numbers
 		}
 	}
 	return "Number is not found"

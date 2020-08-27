@@ -8,15 +8,13 @@ import (
 )
 
 func main() {
-	api.Hello()
-
+	db := slice_db.New()
 	r := gin.Default()
 
-	r.GET("/hello", api.HelloGet())
+	r.GET("/numbers", api.NumbersGet(db))
+	r.GET("/numbers/:int", api.NumbersGetOne(db))
+	r.POST("/numbers", api.NumbersPost(db))
+	r.DELETE("/numbers/:int", api.NumbersDelete(db))
 
-	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
-
-	db := slice_db.New()
-
-	db.Add(25)
+	r.Run()
 }
