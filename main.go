@@ -12,9 +12,9 @@ func main() {
 	r := gin.Default()
 
 	r.GET("/numbers", api.NumbersGet(db))
-	r.GET("/numbers/:int", api.NumbersGetOne(db))
+	r.GET("/numbers/{int}", api.NumbersGetOne(db))
 	r.POST("/numbers", api.NumbersPost(db))
-	r.DELETE("/numbers/:int", api.NumbersDelete(db))
+	r.DELETE("/numbers/{int}", api.NumbersDelete(db))
 
 	r.Run()
 }

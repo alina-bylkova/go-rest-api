@@ -1,49 +1,57 @@
 # REST API with GO/Gin
 
-## General instructions to create program in go
+This repo is a simple CRUD API for learning purpose
 
-### Choose a module path and create a go.mod file
+In this API I have learned features and patterns in Go:
 
-Run the following commands in the terminal:
+- Using Gin to create a simple API
+- Testing HTTP handlers
+- Using Docker to containerize the app
+- Using Redis for key-value storage
 
-mkdir `<directory-path>`
+## How can I use it?
 
-cd `<directory-path>`
+**Install**
 
-go mod init `<directory-path>`
+```sh
+$ go get
+```
 
-- go.mod is like package.json in node.js (it contains an inventory of all your dependencies)
-- go.sum is like package-lock.json in node.js
+**Usage**
+Launch the server
 
-touch main.go
+```sh
+$ make dev || go run main.go
+```
 
-touch makefile (it allows us to create scripts for our app)
+**Testing**
 
-- inside the file type: `dev: go run main.go`
-- to run this command in the terminal, type in `make dev`
+```sh
+$ go test ./... || go test ./db/slice_db
+```
 
-### Install dependencies
+## Endpoints
 
-Run the following commands in the terminal:
+Fetch all numbers
 
-go get `<module-name>` - to download one specific package
+```
+GET /numbers
+```
 
-- import `<module-name>` to the file - to import package to the file
+Fetch a specific number
 
-go build || go test - to download all required module's dependencies
+```
+GET /numbers/{int}
+```
 
-go list -m all - to list all installed packages
+Add a number
 
-### Testing
+```
+POST /numbers
+```
 
-Run the following commands in the terminal:
+Remove a number
 
-go test `<test-file-path`
-
-example: go test ./db/slice_db
-
-go test ./... - to test everything
-
-go test -cover ./... - it will provide coverage for the testing (e.g. the output coverage: 100% means that we are covering 100% statements without testing)
-
-
+```
+DELETE /numbers/{int}
+```
