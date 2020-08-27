@@ -18,11 +18,14 @@ $ go get
 ```
 
 **Usage**
+
 Launch the server
 
 ```sh
 $ make dev || go run main.go
 ```
+
+The app will be running at http://localhost:8080/
 
 **Testing**
 

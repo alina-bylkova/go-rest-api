@@ -1,24 +1,27 @@
-## General instructions to create program in go
+## General instructions to create your first program in Go
 
 ### Choose a module path and create a go.mod file
 
 Run the following commands in the terminal:
 
-mkdir `<directory-path>`
+```console
+$ mkdir `<directory-path>`
 
-cd `<directory-path>`
+$ cd `<directory-path>`
 
-go mod init `<directory-path>`
+$ go mod init `<directory-path>`
 
 - go.mod is like package.json in node.js (it contains an inventory of all your dependencies)
 - go.sum is like package-lock.json in node.js
 
-touch main.go
+$ touch main.go
 
-touch makefile (it allows us to create scripts for our app)
+$ touch makefile 
 
+- it allows us to create scripts for our app
 - inside the file type: `dev: go run main.go`
 - to run this command in the terminal, type in `make dev`
+```
 
 ### Install dependencies
 
