@@ -1,10 +1,10 @@
 package db
 
 // Interfaces can be used as function parameters in helper functions like NumbersGet, NumbersPost, etc.
-type Getter interface {
+type DataLayer interface {
+	Add(int) bool
 	GetAll() []int
-}
-
-type Adder interface {
-	Add(num int) bool
+	GetOne(int) (int, error)
+	Delete(int) bool
+	Update(int, int) error
 }

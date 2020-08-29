@@ -38,6 +38,25 @@ func (db *SliceDb) GetOne(num int) (int, error) {
 	return 0, errors.New("Number is not found")
 }
 
+// Update specific item
+func (db *SliceDb) Update(num int, newNum int) error {
+	for _, item := range db.numbers {
+		if item == newNum {
+			// New number already exist
+			return errors.New("New number already exists in a database")
+		}
+	}
+
+	for i := 0; i < len(db.numbers); i++ {
+		if db.numbers[i] == num {
+			db.numbers = append(db.numbers[:i], db.numbers[i+1:]...)
+			db.numbers = append(db.numbers, newNum)
+			return nil
+		}
+	}
+	return errors.New("Searched number is not found in a database")
+}
+
 // Delete specific item
 func (db *SliceDb) Delete(num int) bool {
 	for i := 0; i < len(db.numbers); i++ {

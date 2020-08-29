@@ -16,7 +16,7 @@ import (
 // }
 
 // Using interface
-func NumbersGet(db db.Getter) gin.HandlerFunc {
+func NumbersGet(db db.DataLayer) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		result := db.GetAll()
 		c.JSON(http.StatusOK, result)

@@ -46,6 +46,25 @@ func (db *RedisDb) GetOne(num int) (int, error) {
 	return 0, errors.New("Number is not found")
 }
 
+// Update specific item
+func (db *RedisDb) Update(num int, newNum int) error {
+	for k := range db.numbers {
+		if k == newNum {
+			// New number already exist
+			return errors.New("New number already exists in a database")
+		}
+	}
+
+	for k := range db.numbers {
+		if k == num {
+			delete(db.numbers, num)
+			db.numbers[newNum] = true
+			return nil
+		}
+	}
+	return errors.New("Searched number is not found in a database")
+}
+
 // Delete specific item
 func (db *RedisDb) Delete(num int) bool {
 	for k := range db.numbers {

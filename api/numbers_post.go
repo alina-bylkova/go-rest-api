@@ -27,16 +27,17 @@ type numbersPostRequest struct {
 // }
 
 // Using interface
-func NumbersPost(db db.Adder) gin.HandlerFunc {
+func NumbersPost(db db.DataLayer) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		requestBody := numbersPostRequest{}
 		c.Bind(&requestBody)
 		result := db.Add(requestBody.Num)
 		if !result {
 			c.JSON(http.StatusUnprocessableEntity, "Number already exist in the database")
-		} else {
-			c.Status(http.StatusCreated)
-			// c.JSON(http.StatusCreated, result)
+			return
 		}
+		c.Status(http.StatusCreated)
+		// c.JSON(http.StatusCreated, result)
+
 	}
 }
