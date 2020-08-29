@@ -1,7 +1,7 @@
 package api
 
 import (
-	"go-rest-api/db/slice_db"
+	"go-rest-api/db"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -12,13 +12,13 @@ type numbersPostRequest struct {
 }
 
 // Example without interface
-// func NumbersPost(db *slice_db.Db) gin.HandlerFunc {
+// func NumbersPost(db *slice_db.SliceDb) gin.HandlerFunc {
 // 	return func(c *gin.Context) {
 // 		requestBody := numbersPostRequest{}
 // 		c.Bind(&requestBody)
 // 		result := db.Add(requestBody.Num)
-// 		if result == "Number already exist in the database" {
-// 			c.JSON(http.StatusUnprocessableEntity, result)
+// 		if !result {
+// 			c.JSON(http.StatusUnprocessableEntity, "Number already exist in the database")
 // 		} else {
 // 			c.Status(http.StatusCreated)
 // 			// c.JSON(http.StatusCreated, result)
@@ -27,13 +27,13 @@ type numbersPostRequest struct {
 // }
 
 // Using interface
-func NumbersPost(db slice_db.Adder) gin.HandlerFunc {
+func NumbersPost(db db.Adder) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		requestBody := numbersPostRequest{}
 		c.Bind(&requestBody)
 		result := db.Add(requestBody.Num)
-		if result == "Number already exist in the database" {
-			c.JSON(http.StatusUnprocessableEntity, result)
+		if !result {
+			c.JSON(http.StatusUnprocessableEntity, "Number already exist in the database")
 		} else {
 			c.Status(http.StatusCreated)
 			// c.JSON(http.StatusCreated, result)

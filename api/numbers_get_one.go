@@ -8,13 +8,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func NumbersGetOne(db *slice_db.Db) gin.HandlerFunc {
+func NumbersGetOne(db *slice_db.SliceDb) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		numString := c.Param("int")
 		num, _ := strconv.Atoi(numString)
-		result := db.GetOne(num)
-		if result == "Number is not found" {
-			c.JSON(http.StatusNotFound, result)
+		result, err := db.GetOne(num)
+		if err != nil {
+			c.JSON(http.StatusNotFound, err)
 		} else {
 			c.JSON(http.StatusOK, result)
 		}

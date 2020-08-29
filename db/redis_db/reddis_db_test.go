@@ -1,4 +1,4 @@
-package slice_db
+package redis_db
 
 import (
 	"testing"
@@ -6,12 +6,10 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// cover 95-100% - test alternative cases
-
 func TestAdd(t *testing.T) {
 	db := New()
-	db.Add(20)
-	if len(db.GetAll()) != 1 {
+	result := db.Add(20)
+	if !result {
 		t.Errorf("Item was not added")
 	}
 }
@@ -29,7 +27,6 @@ func TestGetOne(t *testing.T) {
 	db := New()
 	db.Add(5)
 	db.Add(10)
-
 	result, err := db.GetOne(5)
 
 	assert.Nil(t, err)
@@ -43,6 +40,10 @@ func TestDelete(t *testing.T) {
 	db := New()
 	db.Add(5)
 	db.Add(10)
+	// result := db.Delete(5)
+	// if !result {
+	// 	t.Errorf("Item was not deleted")
+	// }
 	db.Delete(5)
 	resultGet, _ := db.GetOne(5)
 	if resultGet == 5 {

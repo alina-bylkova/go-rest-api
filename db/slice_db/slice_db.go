@@ -1,60 +1,50 @@
 package slice_db
 
-// Interfaces can be used as function parameters in helper functions like NumbersGet, NumbersPost, etc.
-type Getter interface {
-	GetAll() []int
+import "errors"
+
+type SliceDb struct {
+	numbers []int
 }
 
-type Adder interface {
-	Add(num int) interface{}
-}
-
-type Db struct {
-	Numbers []int
-}
-
-func New() *Db {
-	// return &Db{
-	// 	Numbers: []int{5, 10},
-	// }
-	return &Db{}
+func New() *SliceDb {
+	return &SliceDb{
+		numbers: []int{},
+	}
 }
 
 // Create new item
-func (db *Db) Add(num int) interface{} {
-	for _, item := range db.Numbers {
+func (db *SliceDb) Add(num int) bool {
+	for _, item := range db.numbers {
 		if item == num {
-			return "Number already exist in the database"
+			return false
 		}
 	}
-	db.Numbers = append(db.Numbers, num)
-	return db.Numbers
+	db.numbers = append(db.numbers, num)
+	return true
 }
 
 // Get all items
-func (db *Db) GetAll() []int {
-	return db.Numbers
+func (db *SliceDb) GetAll() []int {
+	return db.numbers
 }
 
 // Get specific item
-func (db *Db) GetOne(num int) interface{} {
-	// If not found return not found
-	for _, item := range db.Numbers {
+func (db *SliceDb) GetOne(num int) (int, error) {
+	for _, item := range db.numbers {
 		if item == num {
-			return item
+			return item, nil
 		}
 	}
-	return "Number is not found"
+	return 0, errors.New("Number is not found")
 }
 
 // Delete specific item
-func (db *Db) Delete(num int) interface{} {
-	for i := 0; i < len(db.Numbers); i++ {
-		if db.Numbers[i] == num {
-			db.Numbers = append(db.Numbers[:i], db.Numbers[i+1:]...)
-			i--
-			return db.Numbers
+func (db *SliceDb) Delete(num int) bool {
+	for i := 0; i < len(db.numbers); i++ {
+		if db.numbers[i] == num {
+			db.numbers = append(db.numbers[:i], db.numbers[i+1:]...)
+			return true
 		}
 	}
-	return "Number is not found"
+	return false
 }
