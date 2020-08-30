@@ -12,7 +12,7 @@ In this API I have learned features and patterns in Go:
 
 ## How can I use it?
 
-# For local development follow these steps:
+### For local development follow these steps:
 
 **Install**
 
@@ -45,7 +45,7 @@ $ go test ./...
 OR
 
 ```sh
-$ go test ./db/slice_db
+$ go test ./db/slice_db && go test ./db/map_db
 ```
 
 ## Endpoints
@@ -75,24 +75,22 @@ DELETE /numbers/:int
 ```
 
 
-# Build docker container with the app
+## Build docker container with the app
 
-## In case if you need to build the go app for linux, uncomment first option
-## in Docker file and run this command:
+### In case if you need to build the go app for linux, uncomment first option in Docker file and run this command in the terminal:
 `env GOOS=linux GOARCH=amd64 go build`
 
-
-## Build docker image
+### Build docker image
 `docker build -t rest-api:1.0 .`
 
 where `rest-api` is image name and `1.0` is a tag
 
-## Start containers in detached mode
+### Start containers in detached mode
 `docker-compose up -d`
 
-### Helpful commands 
+## Helpful commands 
 
-## Run a command inside a container
+### Run a command inside a container
 if you want to connect to redis cli run:
 
 `docker exec -it {container_name} {command}`
