@@ -1,0 +1,8 @@
+Dockerfile
+Docker-compose.yml
+go.sum
+makefile
+README.md
+instructions/
+example/
+.gitignore

@@ -6,5 +6,5 @@ type DataLayer interface {
 	GetAll() []int
 	GetOne(int) (int, error)
 	Delete(int) bool
-	Update(int, int) error
+	// Update(int, int) error
 }

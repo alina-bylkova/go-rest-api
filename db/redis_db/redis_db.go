@@ -1,77 +1,87 @@
 package redis_db
 
 import (
+	"context"
 	"errors"
+	"fmt"
+	"strconv"
+
+	"github.com/go-redis/redis/v8"
 )
 
 type RedisDb struct {
-	numbers map[int]bool
+	rdb *redis.Client
+	ctx context.Context
 }
 
-func New() *RedisDb {
-	return &RedisDb{
-		numbers: map[int]bool{},
-	}
+func New(url string) *RedisDb {
+	var ctx = context.Background()
+	rdb := redis.NewClient(&redis.Options{
+		Addr:     url,
+		Password: "", // no password set
+		DB:       0,  // use default DB
+	})
+	return &RedisDb{rdb, ctx}
 }
 
 // Create new item
 func (db *RedisDb) Add(num int) bool {
-	for k := range db.numbers {
-		if k == num {
-			return false
-		}
+
+	numString := strconv.Itoa(num)
+
+	_, err := db.rdb.Get(db.ctx, numString).Result()
+	if err != nil && err != redis.Nil {
+		fmt.Printf("Internal error with redis: %v\n", err)
+		return false
 	}
-	db.numbers[num] = true
+	if err == nil {
+		return false
+	}
+
+	if err := db.rdb.Set(db.ctx, numString, true, 0).Err(); err != nil {
+		fmt.Printf("Internal error with redis: %v\n", err)
+		return false
+	}
 	return true
 }
 
-// return []int
 // Get all items
 func (db *RedisDb) GetAll() []int {
-	arr := []int{}
-	for k := range db.numbers {
-		arr = append(arr, k)
+	val := db.rdb.Keys(db.ctx, "*")
+	strs := val.Val()
+	arr := make([]int, 0, len(strs))
+	for _, str := range strs {
+		num, err := strconv.Atoi(str)
+		if err == nil {
+			arr = append(arr, num)
+		}
 	}
 	return arr
 }
 
 // Get specific item
 func (db *RedisDb) GetOne(num int) (int, error) {
-	// If not found return not found
-	for k := range db.numbers {
-		if k == num {
-			return k, nil
-		}
-	}
-	return 0, errors.New("Number is not found")
-}
+	numString := strconv.Itoa(num)
 
-// Update specific item
-func (db *RedisDb) Update(num int, newNum int) error {
-	for k := range db.numbers {
-		if k == newNum {
-			// New number already exist
-			return errors.New("New number already exists in a database")
-		}
+	_, err := db.rdb.Get(db.ctx, numString).Result()
+	if err != nil && err != redis.Nil {
+		fmt.Printf("Error: %v\n", err)
+		return 0, errors.New("Internal error with redis")
 	}
-
-	for k := range db.numbers {
-		if k == num {
-			delete(db.numbers, num)
-			db.numbers[newNum] = true
-			return nil
-		}
+	if err != nil {
+		return 0, errors.New("Number is not found")
 	}
-	return errors.New("Searched number is not found in a database")
+	return num, nil
 }
 
 // Delete specific item
 func (db *RedisDb) Delete(num int) bool {
-	for k := range db.numbers {
-		if k == num {
-			delete(db.numbers, num)
-			return true
-		}
+	numString := strconv.Itoa(num)
+
+	val := db.rdb.Del(db.ctx, numString).Val()
+
+	if val != 1 {
+		return false
 	}
-	return false
+	return true
 }

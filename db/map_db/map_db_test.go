@@ -1,4 +1,4 @@
-package redis_db
+package map_db
 
 import (
 	"testing"

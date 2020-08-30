@@ -29,7 +29,7 @@ func NumbersGetOne(db db.DataLayer) gin.HandlerFunc {
 		num, _ := strconv.Atoi(numString)
 		result, err := db.GetOne(num)
 		if err != nil {
-			c.JSON(http.StatusNotFound, err)
+			c.JSON(http.StatusNotFound, err.Error())
 			return
 		}
 		c.JSON(http.StatusOK, result)

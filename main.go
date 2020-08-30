@@ -2,7 +2,10 @@ package main
 
 import (
 	"go-rest-api/api"
+	"go-rest-api/db"
+	"go-rest-api/db/map_db"
 	"go-rest-api/db/redis_db"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,7 +16,15 @@ func main() {
 	// var db db.DataLayer = redis_db.New()
 	// var db db.DataLayer = slice_db.New()
 
-	db := redis_db.New()
+	redisEnabled := os.Getenv("REDIS")
+
+	var db db.DataLayer
+	if redisEnabled == "1" {
+		db = redis_db.New("redis:6379")
+	} else {
+		db = map_db.New()
+		// db := slice_db.New()
+	}
 
 	r := gin.Default()
 
