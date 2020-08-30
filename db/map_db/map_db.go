@@ -1,9 +1,13 @@
 package map_db
 
-import "errors"
+import (
+	"errors"
+	"sync"
+)
 
 type MapDb struct {
 	numbers map[int]bool
+	sync.RWMutex
 }
 
 func New() *MapDb {
@@ -14,6 +18,8 @@ func New() *MapDb {
 
 // Create new item
 func (db *MapDb) Add(num int) bool {
+	db.RLock()
+	defer db.RUnlock()
 	for k := range db.numbers {
 		if k == num {
 			return false
@@ -25,6 +31,8 @@ func (db *MapDb) Add(num int) bool {
 
 // Get all items
 func (db *MapDb) GetAll() []int {
+	db.RLock()
+	defer db.RUnlock()
 	arr := []int{}
 	for k := range db.numbers {
 		arr = append(arr, k)
@@ -34,6 +42,8 @@ func (db *MapDb) GetAll() []int {
 
 // Get specific item
 func (db *MapDb) GetOne(num int) (int, error) {
+	db.RLock()
+	defer db.RUnlock()
 	// If not found return not found
 	for k := range db.numbers {
 		if k == num {
@@ -64,6 +74,8 @@ func (db *MapDb) GetOne(num int) (int, error) {
 
 // Delete specific item
 func (db *MapDb) Delete(num int) bool {
+	db.RLock()
+	defer db.RUnlock()
 	for k := range db.numbers {
 		if k == num {
 			delete(db.numbers, num)
