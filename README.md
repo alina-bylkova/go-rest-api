@@ -91,7 +91,7 @@ where `rest-api` is image name and `1.0` is a tag
 ## Helpful commands 
 
 ### Run a command inside a container
-if you want to connect to redis cli run:
+If you want to connect to redis cli run:
 
 `docker exec -it {container_name} {command}`
 
